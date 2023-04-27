@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - wordpress
+    ports:
+      - 8080:80
+      - 443:443
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/server.crt:/etc/nginx/certs/server.crt
+      - ./nginx/server.key:/etc/nginx/certs/server.key
+    networks:
+      - nginx-network
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 9000
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./wordpressdb:/var/lib/mysql
+    environment:
+      WORDPRESS_DB_HOST: yagnaou
+      WORDPRESS_DB_NAME: yagnaou
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: 0001
+    networks:
+      - wordpress-network
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 0001
+      MYSQL_DATABASE: yagnaou
+    volumes:
+      - ./wordpressdb:/var/lib/mysql
+    networks:
+      - mariadb-network
+
+networks:
+  nginx-network:
+    driver: bridge
+  wordpress-network:
+    driver: bridge
+  mariadb-network:
+    driver: bridge
