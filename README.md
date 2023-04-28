@@ -47,7 +47,7 @@
   A Docker Compose has 4 important parts, which are:
   
   * Services: A service is an abstract concept implemented on platforms by running the same container image one or many times. In other words, a service is a way to define and manage a group of containers that provide a specific function, and it simplifies the deployment and management of your applications and allows you to scale up or down as needed.
-  * Networks: A network is an abstraction layer that simplifies the process of setting up networking between containers within a service. It is a way of connecting multiple containers together so that they can communicate with each other, when creating a network, Docker sets up an IP address range and a DNS server
+  * Networks: A network is an abstraction layer that simplifies the process of setting up networking between containers within a service. It is a way of connecting multiple containers together so that they can communicate with each other, when creating a network, Docker sets up an IP address range and a DNS server for the network. Each container gets its unique IP address within that range, which allows them to communicate with each other over the network.
   * Volumes: gfgdfdf
 
 ## What is a Container?
