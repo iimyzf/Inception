@@ -104,7 +104,7 @@ FROM alpine:3.14
 
 # Install required packages
 RUN apk update && \
-    apk add curl php7 php7-fpm php7-mysqli php7-zlib php7-curl php7-json php7-xml php7-phar php7-intl php7-dom php7-xmlreader php7-ctype php7-session php7-mbstring
+    apk add curl php7 php7-fpm php7-mysqli php7-zlib php7-curl php7-json php7-xml php7-phar php7-intl php7-dom php7-xmlreader php7-ctype php7-session php7-mbstring mariadb-client
 
 # Create directories
 # RUN mkdir -p /run/php && \
@@ -112,25 +112,41 @@ RUN apk update && \
 #     chown -R nobody:nobody /var/www/html && \
 #     chmod -R 777 /var/www/html
 
-RUN mkdir -p /var/www/html/wordpress && \
+RUN mkdir -p /var/www/html && \
 	sed -i 's#listen = 127.0.0.1:9000#listen = 0.0.0.0:9000#' /etc/php7/php-fpm.d/www.conf
 
-WORKDIR /var/www/html/
+WORKDIR /var/www/html
 
-# RUN mkdir -p /var/www/html && \
-# 	cd /var/www/html
-	# curl -o wordpress.tar.gz https://wordpress.org/latest.tar.gz && \
-    # tar -xzvf wordpress.tar.gz && \
-    # rm wordpress.tar.gz
+# RUN curl -o wordpress.tar.gz https://wordpress.org/latest.tar.gz && \
+#     tar -xzvf wordpress.tar.gz && \
+# 	rm -rf wordpress.tar.gz
 
-# Configure PHP-FPM
-#COPY ./conf/php-fpm.conf /etc/php7/php-fpm.conf
+# Download and extract WordPress using wget
+# RUN wget -q -O - https://wordpress.org/latest.tar.gz | tar -xzf - -C .
+
+# Download and extract WordPress using wp-cli script
+RUN wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x /usr/local/bin/wp && \
+    wp core download --allow-root
+
+# COPY the wp-config.php file to the container (this file contains the database credentials)
+# COPY ./conf/wp-config.php /tmp/wp-config.php
+
+# Copy script to start PHP-FPM
+COPY ./tools/setup.sh /tmp/setup.sh
+
+# Set permissions
+RUN chmod +x /tmp/setup.sh
 
 # Expose ports
-EXPOSE 9000 8000
+# EXPOSE 9000 8000
 
 # Start PHP-FPM
-CMD ["php-fpm7", "-F"]
+# CMD ["php-fpm7", "-F"]
+
+# Start PHP-FPM and run script to setup WordPress
+WORKDIR /tmp
+CMD [ "./setup.sh" ]
 
 
 # # ------------------------------------------------------------------------------------------------------------------------

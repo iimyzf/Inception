@@ -2,14 +2,16 @@ FROM alpine:3.14
 
 # Install MariaDB and set the root password
 RUN apk update && \ 
-    apk add mariadb mariadb-client && \
+    apk add mariadb mariadb-client  && \
 	mkdir -p /run/mysqld && \
 	chown -R mysql:mysql /run/mysqld && \
     mysql_install_db --user=mysql --datadir=/var/lib/mysql && \
 	chown -R mysql:mysql /var/lib/mysql && \
-    # /usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < /docker-entrypoint-initdb.d/setup.sql
-    sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf && \
+	sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf && \
     sed -i 's/#bind-address/bind-address/g' /etc/my.cnf.d/mariadb-server.cnf
+    # /usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < /docker-entrypoint-initdb.d/setup.sql
+    # sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf && \
+    # sed -i 's/#bind-address/bind-address/g' /etc/my.cnf.d/mariadb-server.cnf
     # sed -i 's/#character-set-server/character-set-server/g' /etc/my.cnf.d/mariadb-server.cnf && \
     # sed -i 's/#collation-server/collation-server/g' /etc/my.cnf.d/mariadb-server.cnf
 
@@ -17,17 +19,24 @@ RUN apk update && \
 # COPY ./conf/my.cnf /etc/mysql/conf.d/my.cnf
 
 # Copy the script that will run when the container starts up
-COPY ./tools/script.sh /usr/local/bin
+COPY ./tools/script.sh /tmp/script.sh
+# COPY ./conf/query.sql /tmp/query.sql
 
 # Give the script the appropriate permissions
-RUN chmod +x /usr/local/bin/script.sh
+RUN chmod +x /tmp/script.sh
 
 # Expose port
 EXPOSE 3306
 
+ENTRYPOINT [ "/bin/sh", "/tmp/script.sh" ]
+
+WORKDIR /tmp
 # Start MariaDB
-CMD sh -c "mysqld --user=mysql --console"
-# CMD ["/bin/sh", "-c", "/usr/local/bin/script.sh && mysqld --user=mysql --console"]
+# CMD sh -c "mysqld --user=mysql --console"
+# CMD mysqld --user=mysql --console && ./script.sh
+# CMD [ "mysqld", "--user=mysql", "--console", "&&", "./script.sh" ]
+CMD [ "mysqld", "--user=mysql", "--console" ]
+
 
 
 

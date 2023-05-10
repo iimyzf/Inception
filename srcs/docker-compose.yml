@@ -26,15 +26,15 @@ services:
       - 8000:80
       - 9000:9000
     environment:
-      WORDPRESS_DB_NAME: mywordpress
-      WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: password
-      WORDPRESS_DB_HOST: localhost
-      WORDPRESS_URL: http://localhost:8080
-      WORDPRESS_TITLE: "My WordPress Site"
-      WORDPRESS_ADMIN_USER: admin
-      WORDPRESS_ADMIN_PASSWORD: password
-      WORDPRESS_ADMIN_EMAIL: admin@example.com
+      WP_NAME: ${WP_NAME}
+      WP_USER: ${WP_USER}
+      WP_PASSWORD: ${WP_PASSWORD}
+      WP_HOST: ${WP_HOST}
+      WP_URL: ${WP_URL}
+      WP_TITLE: ${WP_TITLE}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
     volumes:
       - ./wordpress:/var/www/html
     depends_on:
@@ -51,10 +51,9 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: password
+      MARIA_NAME: ${MARIA_NAME}
+      MARIA_USER: ${MARIA_USER}
+      MARIA_PASSWORD: ${MARIA_PASSWORD}
     # volumes:
     #   - mariadb:/var/lib/mysql
     networks:
@@ -65,4 +64,10 @@ networks:
     driver: bridge
 
 volumes:
-  mariadb: 
+  mariadb:
+  wordpress:
+    driver: local
+    driver_opts:
+      type : bind
+      o: bind
+      device: /Users/yagnaou/Desktop/Inception/srcs/wordpress 
