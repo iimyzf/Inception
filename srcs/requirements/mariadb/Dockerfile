@@ -28,14 +28,14 @@ RUN chmod +x /tmp/script.sh
 # Expose port
 EXPOSE 3306
 
-ENTRYPOINT [ "/bin/sh", "/tmp/script.sh" ]
+# ENTRYPOINT [ "/bin/sh", "/tmp/script.sh" ]
 
 WORKDIR /tmp
 # Start MariaDB
 # CMD sh -c "mysqld --user=mysql --console"
-# CMD mysqld --user=mysql --console && ./script.sh
+CMD ./script.sh
 # CMD [ "mysqld", "--user=mysql", "--console", "&&", "./script.sh" ]
-CMD [ "mysqld", "--user=mysql", "--console" ]
+# CMD [ "mysqld", "--user=mysql", "--console" ]
 
 
 

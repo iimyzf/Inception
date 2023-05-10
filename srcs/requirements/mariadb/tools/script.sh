@@ -1,11 +1,14 @@
 #!/bin/sh
+echo  "CREATE DATABASE $MARIA_NAME;" >> init.sql
+echo "GRANT ALL PRIVILEGES ON $MARIA_NAME.* TO '$MARIA_USER'@'%' IDENTIFIED BY '$MARIA_PASSWORD';">> init.sql
+echo " FLUSH PRIVILEGES;">> init.sql
+mysqld --user=mysql --init-file=/tmp/init.sql
+
 
 # Create the database and grant privileges to the user
-mysql -u root -p -e "CREATE DATABASE $MARIA_NAME;"
-mysql -u root -p -e "GRANT ALL PRIVILEGES ON $MARIA_NAME.* TO '$MARIA_USER'@'%' IDENTIFIED BY '$MARIA_PASSWORD';"
-mysql -u root -p -e "FLUSH PRIVILEGES;"
 
-sleep 20000
+
+# sleep 20000
 # If not set up yet
 # if [ $? -ne 0 ]; then
 

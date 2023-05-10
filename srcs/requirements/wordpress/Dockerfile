@@ -136,6 +136,7 @@ RUN wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
 COPY ./tools/setup.sh /tmp/setup.sh
 
 # Set permissions
+# COPY ./conf/www.conf /etc/php7/php-fpm.d/www.conf
 RUN chmod +x /tmp/setup.sh
 
 # Expose ports

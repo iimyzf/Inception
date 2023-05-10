@@ -23,7 +23,6 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 8000:80
       - 9000:9000
     environment:
       WP_NAME: ${WP_NAME}
