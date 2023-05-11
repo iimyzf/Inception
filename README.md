@@ -21,6 +21,14 @@
   [∙ What is a Container?](#what-is-a-container)
   
   [∙ What is the difference between Container and VM?](#what-is-the-difference-between-container-and-vm)
+  
+  [∙ What is PID 1?](#what-is-pid-1)
+  
+  [∙ Is the Daemon process PID 1? And how does they differ from each other?](#is-the-daemon-process-pid-1-and-how-does-they-differ-from-each-other)
+  
+  [∙ What is WP-CLI?](#what-is-wp-cli)
+  
+  [∙ Why do we need to work with WP-CLI?](#why-do-we-need-to-work-with-wp-cli)
 
 ## What is Docker?
 
@@ -69,3 +77,16 @@
   <p align="center" width="100%">
     <img width="539" src="https://user-images.githubusercontent.com/63506492/233227532-82371157-98c5-469e-82b4-c7606ee17831.png">
   </p>
+  
+## What is PID 1?
+
+  In a Docker container, the PID 1 process is a special process that plays an important role in the container's lifecycle. This process is the identifier of the init process, which is the first process that is started when the system boots up, and it is responsible for starting and stoping all of the other processes on the system. And in Docker as well, the init process is responsible for starting and stoping the application that is running in the container.
+      
+   > PID 1 in a Docker container behaves differently from the init process in a normal Unix-based system. (they are NOT the same!)
+
+## Is the Daemon process PID 1? And how does they differ from each other?
+
+  <ins><strong>The daemon process is NOT the PID 1</strong></ins>, the daemon process is a background process that runs continuosuly on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
+
+## What is WP-CLI?
+## Why do we need to work with WP-CLI?
