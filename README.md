@@ -89,4 +89,11 @@
   <ins><strong>The daemon process is NOT the PID 1</strong></ins>, the daemon process is a background process that runs continuosuly on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
 
 ## What is WP-CLI?
+
+  WP-CLI is the command line interface for WordPress. It is a tool that allows you to interact with your WordPress site from the command line, it is used for a lot of purposes, such as automating tasks, debugging problems, installing/removing plugins along side with themes, managing users and roles, exporting/importing data, run databses queries, and so much more...
+
 ## Why do we need to work with WP-CLI?
+
+  Since its a tool that allows you to interact directly with your WordPress site from the terminal, it can save you a lot of time that will take you to (for example) installing a pluging/theme manually, moderate users and their roles, deploy a new WordPress website to a production server, etc...
+  
+  WP-CLI will help you do all that in less time and automated as well, so It's a really a great tool that will help you react with your WordPress website.
