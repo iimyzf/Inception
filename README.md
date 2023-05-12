@@ -32,13 +32,15 @@
 
 ## What is Docker?
 
-  Docker is a tool designed to allow developers to build, deploy and run applications in an isolated and consistent manner across different machines and operating systems. This process is done using <strong>CONTAINERS</strong>. which are lightweight virtualized environments that package all the dependencies and code an application needs to run into a single text file, which can run the same way on any machine.
+  Docker is a tool designed to allow you to build, deploy and run applications in an isolated and consistent manner across different machines and operating systems. This process is done using <strong>CONTAINERS</strong>. which are lightweight virtualized environments that package all the dependencies and code an application needs to run into a single text file, which can run the same way on any machine.
   
   While Docker is primarily used to package and run applications in containers, it is not limited to that use case. Docker can also be used to create and run other types of containers, such as ones for testing, development, or experimentation.
 
 ## What is a Docker Image?
 
-  Docker Image is a lightweight executable package that includes everything the application needs to run, including the code, runtime environment, system tools, libraries, and dependencies. Although it cannot guarantee error-free performance, as the behavior of an application ultimately depends on many factors beyond the image itself, using Docker can reduce the likelihood of unexpected errors.
+  Docker Image is a lightweight executable package that includes everything the application needs to run, including the code, runtime environment, system tools, libraries, and dependencies.
+  
+  Although it cannot guarantee error-free performance, as the behavior of an application ultimately depends on many factors beyond the image itself, using Docker can reduce the likelihood of unexpected errors.
   
   Docker Image is built from a <strong>DOCKERFILE</strong>, which is a simple text file that contains a set of instructions for building the image, with each instruction creating a new layer in the image.
 
@@ -48,15 +50,17 @@
 
 ## What is a Docker Compose?
 
-  Docker Compose is a powerful tool that simplifies the deployment and management of multi-container Docker applications. It provides several benefits, including simplifying the process of defining related services, volumes for data persistence, and networks for connecting containers. With Docker Compose, developers can easily configure each service's settings, including the image to use, the ports to expose, and the environment variables to set...
+  Docker Compose is a powerful tool that simplifies the deployment and management of multi-container Docker applications. It provides several benefits, including simplifying the process of defining related services, volumes for data persistence, and networks for connecting containers. With Docker Compose, you can easily configure each service's settings, including the image to use, the ports to expose, and the environment variables to set...
 
-  Overall, Docker Compose streamlines the development process, making it easier for developers to build and deliver their applications with greater efficiency and ease.
+  Overall, Docker Compose streamlines the development process, making it easier for you to build and deliver your applications with greater efficiency and ease.
   
-  A Docker Compose has 4 important parts, which are:
+  A Docker Compose has 3 important parts, which are:
   
-  * Services: A service is an abstract concept implemented on platforms by running the same container image one or many times. In other words, a service is a way to define and manage a group of containers that provide a specific function, and it simplifies the deployment and management of your applications and allows you to scale up or down as needed.
-  * Networks: A network is an abstraction layer that simplifies the process of setting up networking between containers within a service. It is a way of connecting multiple containers together so that they can communicate with each other, when creating a network, Docker sets up an IP address range and a DNS server for the network. Each container gets its unique IP address within that range, which allows them to communicate with each other over the network.
-  * Volumes: gfgdfdf
+  * <strong>Services:</strong> A service is a unit of work in Docker Compose, it has a name, and it defines a container images, a set of environment variables, and a set of ports that are exposed to the host machine. When you run `docker-compose up`, Docker will create a new container for each service in your Compose file.
+
+  * <strong>Networks:</strong> A network is a way for containers to communicate with each other. When you create a network in your Compose file, Docker will create a new network that all the other containers in your Compose file will be connected to. This allows containers to communicate with each other without even knowing the IP of each other, just by the name.
+
+  * <strong>Volumes:</strong> A volume is a way to store data that is shared between containers. When you create a volume in your Compose file, Docker will create a new volume (a folder in another way) that all the containers have access to. This allows you to share data between the containers without having to copy-paste each and every time you want that data.
 
 ## What is a Container?
 
