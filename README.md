@@ -28,7 +28,9 @@
   
   [∙ What is WP-CLI?](#what-is-wp-cli)
   
-  [∙ Why do we need to work with WP-CLI?](#why-do-we-need-to-work-with-wp-cli)
+  [∙ Why do you need to work with WP-CLI?](#why-do-you-need-to-work-with-wp-cli)
+  
+  [∙ What is Redis Cache? And why do you need it in WordPress?](#what-is-redis-cache-and-why-do-you-need-it-in-wordpress)
 
 ## What is Docker?
 
@@ -96,8 +98,17 @@
 
   WP-CLI is the command line interface for WordPress. It is a tool that allows you to interact with your WordPress site from the command line, it is used for a lot of purposes, such as automating tasks, debugging problems, installing/removing plugins along side with themes, managing users and roles, exporting/importing data, run databses queries, and so much more...
 
-## Why do we need to work with WP-CLI?
+## Why do you need to work with WP-CLI?
 
   Since its a tool that allows you to interact directly with your WordPress site from the terminal, it can save you a lot of time that will take you to (for example) installing a pluging/theme manually, moderate users and their roles, deploy a new WordPress website to a production server, etc...
   
   WP-CLI will help you do all that in less time and automated as well, so It's a really a great tool that will help you react with your WordPress website.
+  
+## What is Redis Cache? And why do you need it in WordPress?
+
+  Redis Cache, or Redis Object Cache, is an open-source, in-memory data structure store that can be used as database, cache, or message brocker. It's a plugin for WordPress that improves the performance of your website by storing accessed data in memory, rather than querying the database each and every time that data is needed.
+  
+  You need Redis Cache plugin in your WordPress website because it can improve the performance of the website and reduce the time that it takes to load all the data from your databases, which will cause in a better user experience, plus it will help your website rank higher in search engines, etc...
+  
+  
+  
