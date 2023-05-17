@@ -49,6 +49,27 @@
 ## What is a Dockerfile?
 
   Dockerfile is that <ins><i><strong>SIMPLE TEXT FILE</strong></i></ins> that I mentioned earlier, which contains a set of instructions for building a Docker Image. It specifies the base image to use and then includes a series of commands that automate the process for configuring and building the image, such as installing packages, copying files, and setting environment variables. Each command in the Dockerfile creates a new layer in the image.
+  
+  Here's an example of Dockerfile to make things a little bit clear:
+
+```bash
+# This Specifies the base images for the container (in this case, it's the 3.14 version of Alpine)
+FROM alpine:3.14
+
+# This Run commands in the container shell, and installs the specified packages
+# (it will install nginx & openssl, and will create the directory "/run/nginx" as well)
+RUN apk update && \
+    apk add nginx openssl && \
+    mkdir -p /run/nginx
+
+# This Copies the contents of "./conf/nginx.conf" on the host machine to the "/etc/nginx/http.d/"
+# directory inside the container
+COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
+
+# This Specifies the command that will run when the container get started
+CMD ["nginx", "-g", "daemon off;"]
+
+```
 
 ## What is a Docker Compose?
 
@@ -63,6 +84,46 @@
   * <strong>Networks:</strong> A network is a way for containers to communicate with each other. When you create a network in your Compose file, Docker will create a new network that all the other containers in your Compose file will be connected to. This allows containers to communicate with each other without even knowing the IP of each other, just by the name.
 
   * <strong>Volumes:</strong> A volume is a way to store data that is shared between containers. When you create a volume in your Compose file, Docker will create a new volume (a folder in another way) that all the containers have access to. This allows you to share data between the containers without having to copy-paste each and every time you want that data.
+
+  Here's an example of a Docker Compose to make things a little bit clear:
+   
+```bash
+version: '3'
+
+# All the services that you will work with should be declared under the SERVICES section!
+services:
+
+  # Name of the first service (for example: nginx)
+  nginx:
+  
+    # The hostname of the service (will be the same as the service name!)
+    hostname: nginx
+    
+    # Where the service exist (path) so you can build it
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+      
+    # Restart to always keep the service restarting in case of any unexpected errors causing it to go down
+    restart: always
+    
+    # This line explains itself!!!
+    depends_on:
+      - wordpress
+      
+    # The ports that will be exposed and you will work with
+    ports:
+      - 443:443
+      
+    # The volumes that you will be mounted when the container gets built
+    volumes:
+      - wordpress:/var/www/html
+      
+    # The networks that the container will connect and communicate with the other containers
+    networks:
+      - web
+```
+   
 
 ## What is a Container?
 
