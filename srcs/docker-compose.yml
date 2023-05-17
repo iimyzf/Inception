@@ -58,6 +58,17 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - web
+  
+  redis:
+    hostname: redis
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - web
 
 networks:
   web:
