@@ -50,7 +50,7 @@
 
   Dockerfile is that <ins><i><strong>SIMPLE TEXT FILE</strong></i></ins> that I mentioned earlier, which contains a set of instructions for building a Docker Image. It specifies the base image to use and then includes a series of commands that automate the process for configuring and building the image, such as installing packages, copying files, and setting environment variables. Each command in the Dockerfile creates a new layer in the image.
   
-  Here's an example of Dockerfile to make things a little bit clear:
+  Here's an example of a Dockerfile to make things a little bit clear:
 
 ```bash
 # This Specifies the base images for the container (in this case, it's the 3.14 version of Alpine)
@@ -77,7 +77,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
   Overall, Docker Compose streamlines the development process, making it easier for you to build and deliver your applications with greater efficiency and ease.
   
-  A Docker Compose has 3 important parts, which are:
+  A Docker Compose has <strong>3 important parts</strong>, which are:
   
   * <strong>Services:</strong> A service is a unit of work in Docker Compose, it has a name, and it defines a container images, a set of environment variables, and a set of ports that are exposed to the host machine. When you run `docker-compose up`, Docker will create a new container for each service in your Compose file.
 
@@ -153,7 +153,7 @@ services:
 
 ## Is the Daemon process PID 1? And how does they differ from each other?
 
-  <ins><strong>The daemon process is NOT the PID 1</strong></ins>, the daemon process is a background process that runs continuosuly on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
+  `The daemon process is NOT the PID 1`, the daemon process is a background process that runs continuosuly on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
 
 ## What is WP-CLI?
 
@@ -165,11 +165,68 @@ services:
   
   WP-CLI will help you do all that in less time and automated as well, so It's a really a great tool that will help you react with your WordPress website.
   
+  Here's an example demonstrating how to run WP-CLI in a bash script to configure WordPress environment:
+
+```bash
+#!/bin/sh
+
+# We will first check if the "/var/www/html" folder exist or not, if not we create it
+if [ ! -d "/var/www/html" ]; then
+  mkdir -p /var/www/html
+fi
+
+# We will cd into the folder
+cd /var/www/html
+
+# This downloads the WordPress core files, the option ( --allow-root ) will run the command as root
+# and ( --version:5.8.1 ) specifies the version of WordPress that will get downloaded
+# and ( --local=en_US ) sets the language of the installation to US English
+wp core download --allow-root --version=5.8.1 --locale=en_US
+
+# This will generate the WordPress configuration file, and the options ( --dbname, --dbuser, --dbpass, --dbhost )
+# are just placeholders that will get replaced once the script runs
+wp config create --allow-root --dbname=${WP_NAME} --dbuser=${WP_ADMIN_USER} --dbpass=${WP_PASSWORD} --dbhost=${WP_HOST}
+
+# This will then install WordPress, and again, all the options are just placeholders that will get replaced
+wp core install --allow-root --url=${WP_URL} --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL}
+
+# This create a new WordPress user, and sets its role to author ( --role=author )
+wp user create "${WP_USER}" "${WP_EMAIL}" --user_pass="${WP_PASSWORD}" --role=author
+
+# This is the command that will keep WordPress up and running
+exec php-fpm7 -F -R 
+```
+  
 ## What is Redis Cache? And why do you need it in WordPress?
 
   Redis Cache, or Redis Object Cache, is an open-source, in-memory data structure store that can be used as database, cache, or message brocker. It's a plugin for WordPress that improves the performance of your website by storing accessed data in memory, rather than querying the database each and every time that data is needed.
   
   You need Redis Cache plugin in your WordPress website because it can improve the performance of the website and reduce the time that it takes to load all the data from your databases, which will cause in a better user experience, plus it will help your website rank higher in search engines, etc...
+  
+  In this project of Inception, in order to Redis Cache to work perfectly, you need to add this line in your WordPress script:
+
+  * If you're using Alpine: ` chown -R nobody:nobody * `
+  * If you're using Debian: ` chown -R www-data:www-data * `
+
+What does this basically do is that it changes the ownership of all files and directories recursively `(-R)` to the user and group `nobody:nobody` or `www-data:www-data`
+
+Plus, you also will need to add the `REDIS_HOST` as long as the `REDIS_PORT` to your WordPress `wp-config.php`
+
+Here's and example:
+```bash
+sed -i "41 i define( 'WP_REDIS_HOST', 'redis' );\ndefine( 'WP_REDIS_PORT', '6379' );\n" wp-config.php
+```
+This will add 2 lines to the `wp-config.php` in the 41st line of the file, the first is `define( 'WP_REDIS_HOST', 'redis' );` and the second is `define( 'WP_REDIS_PORT', '6379' );`. Those 2 lines will specify the host and port that Redis Cache will use to establish the connection.
+
+  > Adding them using `echo` seems to cause some problems, and Redis Cache does not want to establish the connection!
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
