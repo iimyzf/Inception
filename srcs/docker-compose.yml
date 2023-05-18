@@ -69,6 +69,22 @@ services:
       - 6379:6379
     networks:
       - web
+  
+  ftp:
+    hostname: ftp
+    build:
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 21:21
+    environment:
+      FTP_USER: ${FTP_USER}
+      FTP_PASSWORD: ${FTP_PASSWORD}
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - web
 
 networks:
   web:
