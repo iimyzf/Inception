@@ -222,6 +222,7 @@ sed -i "41 i define( 'WP_REDIS_HOST', 'redis' );\ndefine( 'WP_REDIS_PORT', '6379
 ```
 This will add 2 lines to the `wp-config.php` in the 41st line of the file, the first is `define( 'WP_REDIS_HOST', 'redis' );` and the second is `define( 'WP_REDIS_PORT', '6379' );`. Those 2 lines will specify the host and port that Redis Cache will use to establish the connection.
 
+  
   > Adding them using `echo` seems to cause some problems, and Redis Cache does not want to establish the connection!
 
 
@@ -233,50 +234,96 @@ This will add 2 lines to the `wp-config.php` in the 41st line of the file, the f
 
 ## How to Configure FTP? And How to Test If it's Working?
   
-  Before configuring and testing if FTP is working fine, you need to install FileZilla or other alternatives in your machine, which will allow you to transfer files between the two hosts easily, I'll use FileZilla in my end
+  Before configuring and testing if FTP is working, you need to install FileZilla or other alternatives in your machine, which will allow you to transfer files between the two hosts easily and make sure that everything works as it should. I'll use FileZilla in my end
 ```bash
 sudo apt-get install filezilla
 ```
-  Once installed, open it by typing the `filezilla` command in your terminal, a window like this will then popup
+  Once installed, open it by typing the `filezilla` command in your terminal. A window like this will then popup
   
   <p align="center" width="100%">
     <img width="1133" alt="Screen Shot 2023-05-20 at 2 42 03 PM" src="https://github.com/iimyzf/Inception/assets/63506492/b7330326-7abc-408c-b14b-3e582fcb080b">
   </p>
   
-  Now you have to configure the FTP so you can connect to the FileZilla, then, and only then you can start transfering the data.
+  Now you have to configure the FTP so you can connect to the FileZilla, then, and only then you can start testing and transfering the data.
 
-  This is the Dockerfile for the FTP, and it's confige file as well!
+  First, you will began by installing the package needed for the FTP, and copying the config file to its proper directory.
+  Here's the Dockerfile for the FTP
 ```bash
 FROM alpine:3.14
 
+# Installing the VSFTPD
 RUN apk update && \
-	apk add vsftpd
+    apk add vsftpd
 
+# Copying the config file to its proper directory
 COPY ./conf/vsftpd.conf /etc/vsftpd/vsftpd.conf
 
-RUN adduser -D -h /var/ftp yagnaou && \
-    echo "yagnaou:password" | chpasswd && \
+# Here, you will create a new user, and give it the permissions needed so you can connect to FileZilla using it
+RUN adduser -D -h /var/ftp USER_NAME && \
+    echo "USER_NAME:USER_PASSWORD" | chpasswd && \
     mkdir -p /var/ftp && \
-    chown -R yagnaou:yagnaou /var/ftp && \
+    chown -R USER_NAME:USER_NAME /var/ftp && \
     chmod 755 /var/ftp
 
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 ```
 
+And here's the config file for the FTP
+
 ```bash
+# This line specifies that the FTP server should listen for incoming connections
 listen=YES
+
+# This line disables anonymous access to the FTP server
+# (ONLY authenticated users can get access)
 anonymous_enable=NO
+
+# This line enables local user access to the FTP server
 local_enable=YES
+
+# This line enables write access for authenticated users
+# (authenticated users can upload/modify files on the FTP)
 write_enable=YES
+
+# This line tells the FTP to use the local system's time
 local_umask=022
+
+# This line enables the display of directory welcome messages
+# (FTP will display a message when a user enter a directory)
 dirmessage_enable=YES
+
+# This line instructs the FTP server to use the local system's time settings
 use_localtime=YES
+
+# This line enables logging of file transfer activities
+# (FTP will create a log file containing infos about data transfering)
 xferlog_enable=YES
+
+# This line specifies whether the FTP server should use port 20 for active data connections
 connect_from_port_20=NO
+
+# This line disables the use of a seccomp sandbox
+# (Seccomp is a security mechanism that restricts the system calls available to a process)
 seccomp_sandbox=NO
 ```
 
+Now after setting everything up, open FileZilla, and connect using the following:
+  * Host: `127.0.0.1`
+  * Username: `USER_NAME`
+  * Password: `USER_PASSWORD`
+  * Port: The one you specified in the Docker Compose, will usually be `21`
   
+  <p align="center" width="100%">
+    <img width="650" alt="Screen Shot 2023-05-20 at 4 28 53 PM" src="https://github.com/iimyzf/Inception/assets/63506492/fa3540d0-622a-43c1-8730-34965c4451d2">
+  </p>
+
+If everything is done correctly, you will be able to connect to FileZilla without any error, and then you can start transfering data as you wish!
+
+  <p align="center" width="120%">
+    <img width="650" alt="Screen Shot 2023-05-20 at 4 24 12 PM" src="https://github.com/iimyzf/Inception/assets/63506492/04449b7b-936b-4760-b1f0-27b6f222e15d">
+  </p>
+
+
   
   
   
