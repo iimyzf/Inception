@@ -233,9 +233,49 @@ This will add 2 lines to the `wp-config.php` in the 41st line of the file, the f
 
 ## How to Configure FTP? And How to Test If it's Working?
   
+  Before configuring and testing if FTP is working fine, you need to install FileZilla or other alternatives in your machine, which will allow you to transfer files between the two hosts easily, I'll use FileZilla in my end
+```bash
+sudo apt-get install filezilla
+```
+  Once installed, open it by typing the `filezilla` command in your terminal, a window like this will then popup
   
+  <p align="center" width="100%">
+    <img width="1133" alt="Screen Shot 2023-05-20 at 2 42 03 PM" src="https://github.com/iimyzf/Inception/assets/63506492/b7330326-7abc-408c-b14b-3e582fcb080b">
+  </p>
   
-  
+  Now you have to configure the FTP so you can connect to the FileZilla, then, and only then you can start transfering the data.
+
+  This is the Dockerfile for the FTP, and it's confige file as well!
+```bash
+FROM alpine:3.14
+
+RUN apk update && \
+	apk add vsftpd
+
+COPY ./conf/vsftpd.conf /etc/vsftpd/vsftpd.conf
+
+RUN adduser -D -h /var/ftp yagnaou && \
+    echo "yagnaou:password" | chpasswd && \
+    mkdir -p /var/ftp && \
+    chown -R yagnaou:yagnaou /var/ftp && \
+    chmod 755 /var/ftp
+
+CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+```
+
+```bash
+listen=YES
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=NO
+seccomp_sandbox=NO
+```
+
   
   
   
