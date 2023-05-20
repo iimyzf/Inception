@@ -78,9 +78,6 @@ services:
     restart: always
     ports:
       - 21:21
-    environment:
-      FTP_USER: ${FTP_USER}
-      FTP_PASSWORD: ${FTP_PASSWORD}
     volumes:
       - wordpress:/var/www/html
     networks:
