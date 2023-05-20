@@ -20,17 +20,21 @@
 
   [∙ What is a Container?](#what-is-a-container)
   
-  [∙ What is the difference between Container and VM?](#what-is-the-difference-between-container-and-vm)
+  [∙ What is The Difference Between Container and VM?](#what-is-the-difference-between-container-and-vm)
   
   [∙ What is PID 1?](#what-is-pid-1)
   
-  [∙ Is the Daemon process PID 1? And how does they differ from each other?](#is-the-daemon-process-pid-1-and-how-does-they-differ-from-each-other)
+  [∙ Is the Daemon Process PID 1? And How Does They Differ From Each Other?](#is-the-daemon-process-pid-1-and-how-does-they-differ-from-each-other)
   
   [∙ What is WP-CLI?](#what-is-wp-cli)
   
-  [∙ Why do you need to work with WP-CLI?](#why-do-you-need-to-work-with-wp-cli)
+  [∙ Why Do You Need to Work With WP-CLI?](#why-do-you-need-to-work-with-wp-cli)
   
-  [∙ What is Redis Cache? And why do you need it in WordPress?](#what-is-redis-cache-and-why-do-you-need-it-in-wordpress)
+  [∙ What is Redis Cache? And Why Do You Need it in WordPress?](#what-is-redis-cache-and-why-do-you-need-it-in-wordpress)
+  
+  [∙ What is FTP? And How Does it Work?](#what-is-ftp-and-how-does-it-work)
+  
+  [∙ How to Configure FTP? And How to Test If it's Working?](#how-to-configure-ftp-and-how-to-test-if-its-working)
 
 ## What is Docker?
 
@@ -129,7 +133,7 @@ services:
 
   A Container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.
 
-## What is the difference between Container and VM?
+## What is The Difference Between Container and VM?
 
   Containers and Virtual machines have similar resource isolation and allocation benefits but function differently because containers virtualize the operating system instead of the hardware. Containers are more portable and efficient.
   
@@ -151,7 +155,7 @@ services:
       
    > PID 1 in a Docker container behaves differently from the init process in a normal Unix-based system. (they are NOT the same!)
 
-## Is the Daemon process PID 1? And how does they differ from each other?
+## Is the Daemon Process PID 1? And How Does They Differ From Each Other?
 
   `The daemon process is NOT the PID 1`, the daemon process is a background process that runs continuosuly on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
 
@@ -159,7 +163,7 @@ services:
 
   WP-CLI is the command line interface for WordPress. It is a tool that allows you to interact with your WordPress site from the command line, it is used for a lot of purposes, such as automating tasks, debugging problems, installing/removing plugins along side with themes, managing users and roles, exporting/importing data, run databses queries, and so much more...
 
-## Why do you need to work with WP-CLI?
+## Why Do You Need to Work With WP-CLI?
 
   Since its a tool that allows you to interact directly with your WordPress site from the terminal, it can save you a lot of time that will take you to (for example) installing a pluging/theme manually, moderate users and their roles, deploy a new WordPress website to a production server, etc...
   
@@ -197,7 +201,7 @@ wp user create "${WP_USER}" "${WP_EMAIL}" --user_pass="${WP_PASSWORD}" --role=au
 exec php-fpm7 -F -R 
 ```
   
-## What is Redis Cache? And why do you need it in WordPress?
+## What is Redis Cache? And Why Do You Need it in WordPress?
 
   Redis Cache, or Redis Object Cache, is an open-source, in-memory data structure store that can be used as database, cache, or message brocker. It's a plugin for WordPress that improves the performance of your website by storing accessed data in memory, rather than querying the database each and every time that data is needed.
   
@@ -219,6 +223,15 @@ sed -i "41 i define( 'WP_REDIS_HOST', 'redis' );\ndefine( 'WP_REDIS_PORT', '6379
 This will add 2 lines to the `wp-config.php` in the 41st line of the file, the first is `define( 'WP_REDIS_HOST', 'redis' );` and the second is `define( 'WP_REDIS_PORT', '6379' );`. Those 2 lines will specify the host and port that Redis Cache will use to establish the connection.
 
   > Adding them using `echo` seems to cause some problems, and Redis Cache does not want to establish the connection!
+
+
+## What is FTP? And How Does it Work?
+
+  FTP or File Transfer Protocol is a protocol that's used for transferring files between a client and a server over TCP/IP network, such as the internet. It provides a robust mechanism for users to upload, download, and manage files on remote servers.
+  
+  FTP works by opening two connections that link the 2 hosts (client and server) trying to communicate between each other, one connection is designed for the commands and replies that gets sent between the two clients, and the other connection is handles the transfer of the data.
+
+## How to Configure FTP? And How to Test If it's Working?
   
   
   
