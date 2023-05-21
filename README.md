@@ -176,7 +176,7 @@ services:
 
 # We will first check if the "/var/www/html" folder exist or not, if not we create it
 if [ ! -d "/var/www/html" ]; then
-  mkdir -p /var/www/html
+  mkdir /var/www/html
 fi
 
 # We will cd into the folder
