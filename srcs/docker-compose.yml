@@ -83,6 +83,19 @@ services:
     networks:
       - web
 
+  site:
+    hostname: site
+    build:
+      context: ./requirements/bonus/site
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 5000:5000
+    volumes:
+      - site:/usr/share/nginx/html
+    networks:
+      - web
+
 networks:
   web:
     driver: bridge
@@ -100,3 +113,9 @@ volumes:
       type : bind
       o: bind
       device: /home/yagnaou/data/wordpress
+  site:
+    driver: local
+    driver_opts:
+      type : bind
+      o: bind
+      device: /home/yagnaou/data/site
