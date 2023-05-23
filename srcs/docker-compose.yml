@@ -95,6 +95,17 @@ services:
       - site:/usr/share/nginx/html
     networks:
       - web
+  
+  adminer:
+    hostname: adminer
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - web
 
 networks:
   web:
