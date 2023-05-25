@@ -35,6 +35,8 @@
   [∙ What is FTP? And How Does it Work?](#what-is-ftp-and-how-does-it-work)
   
   [∙ How to Configure FTP? And How to Test If it's Working?](#how-to-configure-ftp-and-how-to-test-if-its-working)
+  
+  [∙ What is Adminer?](#what-is-adminer)
 
 ## What is Docker?
 
@@ -323,7 +325,9 @@ If everything is done correctly, you will be able to connect to FileZilla withou
     <img width="650" alt="Screen Shot 2023-05-20 at 4 24 12 PM" src="https://github.com/iimyzf/Inception/assets/63506492/04449b7b-936b-4760-b1f0-27b6f222e15d">
   </p>
 
-
+## What is Adminer?
+  
+  Adminer is a free open-source tool that allows you to easily view, edit, create and modify databases through a user-friendly interface. It support a wide range of databases systems, such as MariaDB, MySQL, PostgreSQL, SQLite and many more... It is a single file application that doesn't require any installation, and that what makes Adminer stand out and be preferred as a database manager among all the other alternatives.
   
   
   
