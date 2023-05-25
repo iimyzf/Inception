@@ -106,6 +106,17 @@ services:
       - wordpress:/var/www/html
     networks:
       - web
+  
+  cadvisor:
+    hostname: cadvisor
+    build:
+      context: ./requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - web
 
 networks:
   web:
