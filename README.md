@@ -11,12 +11,16 @@
 ## ✏︎  The topics we will discuss in this README are:
 
   [∙ What is Docker?](#what-is-docker)
+  
+  [∙ How Does Docker Work?](#how-does-docker-work)
 
   [∙ What is a Docker Image?](#what-is-a-docker-image)
 
   [∙ What is a Dockerfile?](#what-is-a-dockerfile)
 
   [∙ What is a Docker Compose?](#what-is-a-docker-compose)
+  
+  [∙ How Does Docker Compose Work?](#how-does-docker-compose-work)
 
   [∙ What is a Container?](#what-is-a-container)
   
@@ -43,6 +47,8 @@
   Docker is a tool designed to allow you to build, deploy and run applications in an isolated and consistent manner across different machines and operating systems. This process is done using <strong>CONTAINERS</strong>. which are lightweight virtualized environments that package all the dependencies and code an application needs to run into a single text file, which can run the same way on any machine.
   
   While Docker is primarily used to package and run applications in containers, it is not limited to that use case. Docker can also be used to create and run other types of containers, such as ones for testing, development, or experimentation.
+  
+## How Does Docker Work?
 
 ## What is a Docker Image?
 
@@ -130,6 +136,7 @@ services:
       - web
 ```
    
+## How Does Docker Compose Work?
 
 ## What is a Container?
 
