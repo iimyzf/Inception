@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ ! -d "/var/www/html" ]; then
-  mkdir -p /var/www/html
+  mkdir /var/www/html
 fi
 
 cd /var/www/html
