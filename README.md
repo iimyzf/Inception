@@ -140,6 +140,8 @@ services:
    
 ## How Does Docker Compose Work?
 
+  Docker Compose uses a YAML file to configure all the services, networks, and volumes that your application needs to. You can then with just a single command create and start all the services from your configuration. That's it. As simple as that. 
+
 ## What is a Container?
 
   A Container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.
