@@ -24,11 +24,11 @@
 
   [∙ What is a Container?](#what-is-a-container)
   
-  [∙ What is The Difference Between Container and VM?](#what-is-the-difference-between-container-and-vm)
+  [∙ What is The Difference Between a Container and a VM?](#what-is-the-difference-between-a-container-and-a-vm)
   
   [∙ What is PID 1?](#what-is-pid-1)
   
-  [∙ Is the Daemon Process PID 1? And How Does They Differ From Each Other?](#is-the-daemon-process-pid-1-and-how-does-they-differ-from-each-other)
+  [∙ Is the Daemon Process PID 1? And How Do They Differ From Each Other?](#is-the-daemon-process-pid-1-and-how-do-they-differ-from-each-other)
   
   [∙ What is WP-CLI?](#what-is-wp-cli)
   
@@ -38,7 +38,7 @@
   
   [∙ What is FTP? And How Does it Work?](#what-is-ftp-and-how-does-it-work)
   
-  [∙ How to Configure FTP? And How to Test If it's Working?](#how-to-configure-ftp-and-how-to-test-if-its-working)
+  [∙ How to Configure FTP? And How to Test If It's Working?](#how-to-configure-ftp-and-how-to-test-if-its-working)
   
   [∙ What is Adminer?](#what-is-adminer)
 
@@ -49,6 +49,8 @@
   While Docker is primarily used to package and run applications in containers, it is not limited to that use case. Docker can also be used to create and run other types of containers, such as ones for testing, development, or experimentation.
   
 ## How Does Docker Work?
+
+  Docker uses a client-server architecture, where Docker client talks to Docker daemon, which is responsible for building, running, and distributing all Docker containers. The Docker client and Docker daemon communicate using a REST API, over a UNIX socket or a network interface.
 
 ## What is a Docker Image?
 
@@ -68,8 +70,8 @@
 # This Specifies the base images for the container (in this case, it's the 3.14 version of Alpine)
 FROM alpine:3.14
 
-# This Run commands in the container shell, and installs the specified packages
-# (it will install nginx & openssl, and will create the directory "/run/nginx" as well)
+# This Run commands in the container shell and installs the specified packages
+# (it will install nginx & OpenSSL, and will create the directory "/run/nginx" as well)
 RUN apk update && \
     apk add nginx openssl && \
     mkdir -p /run/nginx
@@ -78,7 +80,7 @@ RUN apk update && \
 # directory inside the container
 COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
 
-# This Specifies the command that will run when the container get started
+# This Specifies the command that will run when the container gets started
 CMD ["nginx", "-g", "daemon off;"]
 
 ```
@@ -91,7 +93,7 @@ CMD ["nginx", "-g", "daemon off;"]
   
   A Docker Compose has <strong>3 important parts</strong>, which are:
   
-  * <strong>Services:</strong> A service is a unit of work in Docker Compose, it has a name, and it defines a container images, a set of environment variables, and a set of ports that are exposed to the host machine. When you run `docker-compose up`, Docker will create a new container for each service in your Compose file.
+  * <strong>Services:</strong> A service is a unit of work in Docker Compose, it has a name, and it defines container images, a set of environment variables, and a set of ports that are exposed to the host machine. When you run `docker-compose up`, Docker will create a new container for each service in your Compose file.
 
   * <strong>Networks:</strong> A network is a way for containers to communicate with each other. When you create a network in your Compose file, Docker will create a new network that all the other containers in your Compose file will be connected to. This allows containers to communicate with each other without even knowing the IP of each other, just by the name.
 
@@ -105,13 +107,13 @@ version: '3'
 # All the services that you will work with should be declared under the SERVICES section!
 services:
 
-  # Name of the first service (for example: nginx)
+  # Name of the first service (for example nginx)
   nginx:
   
     # The hostname of the service (will be the same as the service name!)
     hostname: nginx
     
-    # Where the service exist (path) so you can build it
+    # Where the service exists (path) so you can build it
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
@@ -142,7 +144,7 @@ services:
 
   A Container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.
 
-## What is The Difference Between Container and VM?
+## What is The Difference Between a Container and a VM?
 
   Containers and Virtual machines have similar resource isolation and allocation benefits but function differently because containers virtualize the operating system instead of the hardware. Containers are more portable and efficient.
   
@@ -160,30 +162,30 @@ services:
   
 ## What is PID 1?
 
-  In a Docker container, the PID 1 process is a special process that plays an important role in the container's lifecycle. This process is the identifier of the init process, which is the first process that is started when the system boots up, and it is responsible for starting and stoping all of the other processes on the system. And in Docker as well, the init process is responsible for starting and stoping the application that is running in the container.
+  In a Docker container, the PID 1 process is a special process that plays an important role in the container's lifecycle. This process is the identifier of the init process, which is the first process that is started when the system boots up, and it is responsible for starting and stopping all of the other processes on the system. And in Docker as well, the init process is responsible for starting and stopping the application that is running in the container.
       
    > PID 1 in a Docker container behaves differently from the init process in a normal Unix-based system. (they are NOT the same!)
 
-## Is the Daemon Process PID 1? And How Does They Differ From Each Other?
+## Is the Daemon Process PID 1? And How Do They Differ From Each Other?
 
-  `The daemon process is NOT the PID 1`, the daemon process is a background process that runs continuosuly on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
+  `The daemon process is NOT the PID 1`, the daemon process is a background process that runs continuously on a system and performs a specific task. In contrast, PID 1 is the first process that the kernel starts in a Unix-based system and plays a special role in the system.
 
 ## What is WP-CLI?
 
-  WP-CLI is the command line interface for WordPress. It is a tool that allows you to interact with your WordPress site from the command line, it is used for a lot of purposes, such as automating tasks, debugging problems, installing/removing plugins along side with themes, managing users and roles, exporting/importing data, run databses queries, and so much more...
+  WP-CLI is the command line interface for WordPress. It is a tool that allows you to interact with your WordPress site from the command line, it is used for a lot of purposes, such as automating tasks, debugging problems, installing/removing plugins alongside themes, managing users and roles, exporting/importing data, run database queries, and so much more...
 
 ## Why Do You Need to Work With WP-CLI?
 
-  Since its a tool that allows you to interact directly with your WordPress site from the terminal, it can save you a lot of time that will take you to (for example) installing a pluging/theme manually, moderate users and their roles, deploy a new WordPress website to a production server, etc...
+  Since its a tool that allows you to interact directly with your WordPress site from the terminal, it can save you a lot of time that will take you to (for example) install a plugin/theme manually, moderate users and their roles, deploy a new WordPress website to a production server, etc...
   
-  WP-CLI will help you do all that in less time and automated as well, so It's a really a great tool that will help you react with your WordPress website.
+  WP-CLI will help you do all that in less time and is automated as well, so It's a really great tool that will help you react with your WordPress website.
   
-  Here's an example demonstrating how to run WP-CLI in a bash script to configure WordPress environment:
+  Here's an example demonstrating how to run WP-CLI in a bash script to configure the WordPress environment:
 
 ```bash
 #!/bin/sh
 
-# We will first check if the "/var/www/html" folder exist or not, if not we create it
+# We will first check if the "/var/www/html" folder exists or not, if not we create it
 if [ ! -d "/var/www/html" ]; then
   mkdir /var/www/html
 fi
@@ -212,20 +214,20 @@ exec php-fpm7 -F -R
   
 ## What is Redis Cache? And Why Do You Need it in WordPress?
 
-  Redis Cache, or Redis Object Cache, is an open-source, in-memory data structure store that can be used as database, cache, or message brocker. It's a plugin for WordPress that improves the performance of your website by storing accessed data in memory, rather than querying the database each and every time that data is needed.
+  Redis Cache, or Redis Object Cache, is an open-source, in-memory data structure store that can be used as a database, cache, or message broker. It's a plugin for WordPress that improves the performance of your website by storing accessed data in memory, rather than querying the database each and every time that data is needed.
   
-  You need Redis Cache plugin in your WordPress website because it can improve the performance of the website and reduce the time that it takes to load all the data from your databases, which will cause in a better user experience, plus it will help your website rank higher in search engines, etc...
+  You need Redis Cache plugin for your WordPress website because it can improve the performance of the website and reduce the time that it takes to load all the data from your databases, which will cause in a better user experience, plus it will help your website rank higher in search engines, etc...
   
-  In this project of Inception, in order to Redis Cache to work perfectly, you need to add this line in your WordPress script:
+  In this project of Inception, in order for Redis Cache to work perfectly, you need to add this line in your WordPress script:
 
   * If you're using Alpine: ` chown -R nobody:nobody * `
   * If you're using Debian: ` chown -R www-data:www-data * `
 
-What does this basically do is that it changes the ownership of all files and directories recursively `(-R)` to the user and group `nobody:nobody` or `www-data:www-data`
+What this basically does is that it changes the ownership of all files and directories recursively `(-R)` to the user and group `nobody:nobody` or `www-data:www-data`
 
 Plus, you also will need to add the `REDIS_HOST` as long as the `REDIS_PORT` to your WordPress `wp-config.php`
 
-Here's and example:
+Here's an example:
 ```bash
 sed -i "41 i define( 'WP_REDIS_HOST', 'redis' );\ndefine( 'WP_REDIS_PORT', '6379' );\n" wp-config.php
 ```
@@ -237,13 +239,13 @@ This will add 2 lines to the `wp-config.php` in the 41st line of the file, the f
 
 ## What is FTP? And How Does it Work?
 
-  FTP or File Transfer Protocol is a protocol that's used for transferring files between a client and a server over TCP/IP network, such as the internet. It provides a robust mechanism for users to upload, download, and manage files on remote servers.
+  FTP or File Transfer Protocol is a protocol that's used for transferring files between a client and a server over TCP/IP network, such as the Internet. It provides a robust mechanism for users to upload, download, and manage files on remote servers.
   
-  FTP works by opening two connections that link the 2 hosts (client and server) trying to communicate between each other, one connection is designed for the commands and replies that gets sent between the two clients, and the other connection is handles the transfer of the data.
+  FTP works by opening two connections that link the 2 hosts (client and server) trying to communicate with each other, one connection is designed for the commands and replies that get sent between the two clients, and the other connection handles the transfer of the data.
 
-## How to Configure FTP? And How to Test If it's Working?
+## How to Configure FTP? And How to Test If It's Working?
   
-  Before configuring and testing if FTP is working, you need to install FileZilla or other alternatives in your machine, which will allow you to transfer files between the two hosts easily and make sure that everything works as it should. I'll use FileZilla in my end
+  Before configuring and testing if FTP is working, you need to install FileZilla or other alternatives on your machine, which will allow you to transfer files between the two hosts easily and make sure that everything works as it should. I'll use FileZilla on my end
 ```bash
 sudo apt-get install filezilla
 ```
@@ -253,9 +255,9 @@ sudo apt-get install filezilla
     <img width="1133" alt="Screen Shot 2023-05-20 at 2 42 03 PM" src="https://github.com/iimyzf/Inception/assets/63506492/b7330326-7abc-408c-b14b-3e582fcb080b">
   </p>
   
-  Now you have to configure the FTP so you can connect to the FileZilla, then, and only then you can start testing and transfering the data.
+  Now you have to configure the FTP so you can connect to the FileZilla, then, and only then you can start testing and transferring the data.
 
-  First, you will began by installing the package needed for the FTP, and copying the config file to its proper directory.
+  First, you will begin by installing the package needed for the FTP and copying the config file to its proper directory.
   Here's the Dockerfile for the FTP
 ```bash
 FROM alpine:3.14
@@ -298,14 +300,14 @@ write_enable=YES
 local_umask=022
 
 # This line enables the display of directory welcome messages
-# (FTP will display a message when a user enter a directory)
+# (FTP will display a message when a user enters a directory)
 dirmessage_enable=YES
 
 # This line instructs the FTP server to use the local system's time settings
 use_localtime=YES
 
-# This line enables logging of file transfer activities
-# (FTP will create a log file containing infos about data transfering)
+# This line enables the logging of file transfer activities
+# (FTP will create a log file containing info about data transferring)
 xferlog_enable=YES
 
 # This line specifies whether the FTP server should use port 20 for active data connections
@@ -326,7 +328,7 @@ Now after setting everything up, open FileZilla, and connect using the following
     <img width="650" alt="Screen Shot 2023-05-20 at 4 28 53 PM" src="https://github.com/iimyzf/Inception/assets/63506492/fa3540d0-622a-43c1-8730-34965c4451d2">
   </p>
 
-If everything is done correctly, you will be able to connect to FileZilla without any error, and then you can start transfering data as you wish!
+If everything is done correctly, you will be able to connect to FileZilla without any error, and then you can start transferring data as you wish!
 
   <p align="center" width="120%">
     <img width="650" alt="Screen Shot 2023-05-20 at 4 24 12 PM" src="https://github.com/iimyzf/Inception/assets/63506492/04449b7b-936b-4760-b1f0-27b6f222e15d">
@@ -334,7 +336,7 @@ If everything is done correctly, you will be able to connect to FileZilla withou
 
 ## What is Adminer?
   
-  Adminer is a free open-source tool that allows you to easily view, edit, create and modify databases through a user-friendly interface. It support a wide range of databases systems, such as MariaDB, MySQL, PostgreSQL, SQLite and many more... It is a single file application that doesn't require any installation, and that what makes Adminer stand out and be preferred as a database manager among all the other alternatives.
+  Adminer is a free open-source tool that allows you to easily view, edit, create, and modify databases through a user-friendly interface. It supports a wide range of database systems, such as MariaDB, MySQL, PostgreSQL, SQLite, and many more... It is a single file application that doesn't require any installation, and that is what makes Adminer stand out and be preferred as a database manager among all the other alternatives.
   
   
   
