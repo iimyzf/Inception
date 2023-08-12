@@ -1,6 +1,5 @@
 FROM alpine:3.14
 
-# Install required packages
 RUN apk update && \
     apk add curl php7 php7-fpm php7-mysqli php7-zlib php7-curl php7-json php7-xml php7-phar php7-intl php7-dom php7-xmlreader php7-ctype php7-session php7-mbstring mariadb-client
 
@@ -9,18 +8,14 @@ RUN mkdir -p /var/www/html && \
 
 WORKDIR /var/www/html
 
-# Download and extract WordPress using wp-cli script
 RUN wget -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x /usr/local/bin/wp && \
     wp core download --allow-root
 
-# Copy script to start PHP-FPM
 COPY ./tools/setup.sh /tmp/setup.sh
 
-# Set permissions
 RUN chmod +x /tmp/setup.sh
 
-# Start PHP-FPM and run script to setup WordPress
 WORKDIR /tmp
 
 CMD [ "./setup.sh" ]
