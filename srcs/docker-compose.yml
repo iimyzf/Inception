@@ -116,9 +116,9 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
+      - /:/rootfs
+      - /var/run:/var/run
+      - /sys:/sys
       - /var/lib/docker/:/var/lib/docker
     networks:
       - web
