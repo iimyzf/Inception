@@ -22,6 +22,8 @@
   
   [∙ How Does Docker Compose Work?](#how-does-docker-compose-work)
 
+  [∙ What is the difference between a Docker image used with Docker Compose and without Docker Compose?](#what-is-the-difference-between-a-docker-image-used-with-docker-compose-and-without-docker-compose)
+
   [∙ What is a Container?](#what-is-a-container)
   
   [∙ What is The Difference Between a Container and a VM?](#what-is-the-difference-between-a-container-and-a-vm)
@@ -141,6 +143,12 @@ services:
 ## How Does Docker Compose Work?
 
   Docker Compose uses a YAML file to configure all the services, networks, and volumes that your application needs to. You can then with just a single command create and start all the services from your configuration. That's it. As simple as that. 
+
+## What is the difference between a Docker image used with Docker Compose and without Docker Compose?
+
+  The main difference between the two is that Docker Compose provides a high level of abstraction for defining and managing multi-container applications, and it also simplifies the process of building, and running all the services (containers) in one take, which means instead of building the image and running the containers one by one, Docker Compose allows you do that for all the containers that you have in just one single command.
+
+  Using Docker directly without Docker Compose gives you more fine-grained control over individual containers, but it requires more work on your end to manage and deal with multiple containers.
 
 ## What is a Container?
 
