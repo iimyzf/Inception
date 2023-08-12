@@ -235,7 +235,7 @@ exec php-fpm7 -F -R
 
 What this basically does is that it changes the ownership of all files and directories recursively `(-R)` to the user and group `nobody:nobody` or `www-data:www-data`
 
-Plus, you also will need to add the `REDIS_HOST` as long as the `REDIS_PORT` to your WordPress `wp-config.php`
+Plus, you will also need to add the `REDIS_HOST` as long as the `REDIS_PORT` to your WordPress Configuration File `wp-config.php`
 
 Here's an example:
 ```bash
